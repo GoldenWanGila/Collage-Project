@@ -8,7 +8,7 @@ on:
   # 排程每天 UTC 16:30 (台灣時間 0:30) 時觸發
   # 語法可上 crontab.guru 查詢
   schedule:
-  - cron: 35 14 * * *
+  - cron: 37 14 * * *
 
 jobs:
   build:
