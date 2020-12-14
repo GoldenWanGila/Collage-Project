@@ -1,0 +1,33 @@
+name: Login to website
+
+on:
+  # push 到 master 分支時會觸發
+  push:
+    branches:
+    - master
+  # 排程每天 UTC 16:30 (台灣時間 0:30) 時觸發
+  # 語法可上 crontab.guru 查詢
+  schedule:
+  - cron: 21 14 * * *
+
+jobs:
+  build:
+    name: Set up environment
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Set up Python 3.7
+      uses: actions/setup-python@v1
+      with:
+        python-version: '3.7'
+    - name: Install dependencies
+      run: |-
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    - name: Login
+      env:
+        # 取得在 Secrets 所設定的加密變數
+        USERNAME: ${{ secrets.USERNAME }}
+        PASSWORD: ${{ secrets.PASSWORD }}
+      run:
+        python getWebData_autoSaved.py
