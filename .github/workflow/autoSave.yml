@@ -15,15 +15,16 @@ jobs:
     name: Set up environment
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - name: Set up Python 3.7
-      uses: actions/setup-python@v1
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
       with:
-        python-version: '3.7'
+        python-version: '3.8'
     - name: Install dependencies
-      run: |-
+      run: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt
+        pip install flake8 pytest
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Login
       env:
         # 取得在 Secrets 所設定的加密變數
