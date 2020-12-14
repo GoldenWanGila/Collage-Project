@@ -32,3 +32,4 @@ jobs:
         PASSWORD: ${{ secrets.PASSWORD }}
       run:
         python getWebData_autoSaved.py
+        
