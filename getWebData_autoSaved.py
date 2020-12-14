@@ -59,4 +59,4 @@ for index in range(7):
             column = 0
     row = 1
 
-wb.save(r"G\Collage-Project\Data\Data collector %s.xlsx" %fileDate)
+wb.save(r"GoldenWanGila\Collage-Project\Data\Data collector %s.xlsx" %fileDate)
