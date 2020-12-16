@@ -1,11 +1,11 @@
-name: Login to website
+name: Data collect
 
 on:
   # push 到 master 分支時會觸發
   push:
     branches:
     - master
-  # 排程每天 UTC 16:30 (台灣時間 0:30) 時觸發
+  # 排程每天 UTC 15:30 (台灣時間 23:30) 時觸發
   # 語法可上 crontab.guru 查詢
   schedule:
   - cron: 30 15 * * *
