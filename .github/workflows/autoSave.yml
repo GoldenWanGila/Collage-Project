@@ -1,4 +1,4 @@
-name: Data collect
+name: Scheduled Data Collect
 
 on:
   # push 到 master 分支時會觸發
