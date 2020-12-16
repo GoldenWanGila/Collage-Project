@@ -28,6 +28,8 @@ for index in range(7):
     soup = BeautifulSoup(responses.text, "html.parser")
 
     all_tbody = soup.find_all(class_="tab-pane")
+    # all_tbody[index] : index = 0       --> 順行
+    #                    index = 1       --> 逆行
 
     # 順行
     ws = wb.create_sheet("%s(順行)" % station_name[index], sheet_position)
