@@ -25,11 +25,11 @@ class Auth():
 
         return {'Authorization': authorization,
                 'x-date': xdate,
-                'Accept - Encoding': 'gzip'}
+                'Accept - Encoding': 'gzip, deflate'}
 
 a = Auth(APPID, APPKEY)
 
-URL = "https://ptx.transportdata.tw/MOTC/v2/Rail/TRA/LiveTrainDelay?$top=30&$format=XML"
+URL = "https://ptx.transportdata.tw/MOTC/v2/Rail/TRA/LiveTrainDelay?$format=XML"
 myheaders = a.get_header()
 
 response = requests.get(URL, headers = myheaders)
