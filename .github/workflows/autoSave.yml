@@ -26,11 +26,10 @@ jobs:
         pip install bs4
         pip install requests
         pip install openpyxl
-        pip install flask
     - name: Login
       env:
         # 取得在 Secrets 所設定的加密變數
         USERNAME: ${{ secrets.USERNAME }}
         PASSWORD: ${{ secrets.PASSWORD }}
       run:
-        python app.py
+        python Get_Taiwan_Railway_Status_Data.py
