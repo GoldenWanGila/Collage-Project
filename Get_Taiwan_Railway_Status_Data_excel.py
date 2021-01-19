@@ -64,4 +64,4 @@ for index in range(7):
             column = 0
     row = 1
 
-wb.save(r"Data\Data collector %s.xlsx" %fileDate)
+wb.save(r"Data\Railway\Data collector %s.xlsx" %fileDate)
