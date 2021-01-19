@@ -35,12 +35,11 @@ for index1 in range(len(station_num)):
         td_in_tr = all_tr[index2].find_all('td')
         for td in td_in_tr:
             column += 1
-            td_reformat = td.get_text()
-            ws.cell(row=row, column=column, value=td_reformat)
+            ws.cell(row=row, column=column, value=td.get_text())
         if column == 17:
             row += 1
             column = 0
         if row == 25:
             row = 1
 
-wb.save(r"Data\Weather\Data collector %s.xlsx" %crawlDate)
+wb.save(r"Data\Weather\Data collector %s.xlsx" %fileDate)
