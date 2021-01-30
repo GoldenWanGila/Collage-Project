@@ -4,8 +4,8 @@ import openpyxl
 import time
 
 
-station_name = ['台中', '豐原', '潭子', '烏日', '花壇', '員林']
-station_num = ['467490', 'C0F9M0', 'C0F9O0', 'C0F9S0', 'C0G910', 'C0G650']
+station_name = ['台中','豐原','潭子','烏日','花壇','員林']
+station_num = ['467490','C0F9M0','C0F9O0','C0F9S0','C0G910','C0G650']
 
 """儲存檔案要用的相關參數"""
 wb = openpyxl.Workbook()
