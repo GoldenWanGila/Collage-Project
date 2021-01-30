@@ -9,9 +9,10 @@ ws = wb.create_sheet("一般成人票(出發站皆為臺中)",0)
 ws.cell(row=1,column=1,value="迄點車站")
 ws.cell(row=1,column=2,value="迄點車站代碼")
 ws.cell(row=1,column=3,value="乘車距離(km)")
-ws.cell(row=1,column=4,value="普悠瑪/太魯閣/自強票價(元台幣)")
+ws.cell(row=1,column=4,value="區間票價(元台幣)")
 ws.cell(row=1,column=5,value="莒光票價(元台幣)")
-ws.cell(row=1,column=6,value="區間票價(元台幣)")
+ws.cell(row=1,column=6,value="普悠瑪/太魯閣/自強票價(元台幣)")
+
 row = 2
 
 fareRates = {"區間":1.46,"莒光":1.75,"自強":2.27}
