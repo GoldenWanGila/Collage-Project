@@ -2,7 +2,6 @@ from bs4 import BeautifulSoup
 import requests
 import openpyxl
 import time
-import re
 
 """儲存檔案要用的相關參數"""
 wb = openpyxl.Workbook()
