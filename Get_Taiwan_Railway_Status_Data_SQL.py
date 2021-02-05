@@ -1,24 +1,29 @@
 from bs4 import BeautifulSoup
 import requests
-import openpyxl
+import pymysql
 import time
 
-wb = openpyxl.Workbook()
+"""SQL相關"""
+user = "root"
+password = "Dieark20000115"
+conn = pymysql.connect(host='localhost', user=user, passwd=password, db = 'railway', charset='utf8')
+cursor = conn.cursor()
+
+
+# wb = openpyxl.Workbook()
 local_time = time.localtime()
-
-date = {"year": "", "month":"", "day":""}
-date["year"] = str(local_time.tm_year)                              # 更改這邊就可以改日期
-date["month"] = str(local_time.tm_mon)                              # 更改這邊就可以改日期
-date["day"] = str(local_time.tm_mday - 1)                           # 更改這邊就可以改日期
-rideDate = date["year"] + "/" + date["month"] + "/" + date["day"]
-fileDate = date["year"] + date["month"] + date["day"]
-
 station_num = ["3230","3280","3300","3350","3340","3360","3390"]
 station_name = ["豐原","太原","臺中","潭子","新烏日","彰化","員林"]
 
+
+"""用於設定要爬取的日期(rideDate)和儲存檔案要用的日期(fileDate)"""
+local_time = time.localtime()
+date = {"year": str(local_time.tm_year), "month": str(local_time.tm_mon), "day": str(local_time.tm_mday - 1)}
+rideDate = date["year"] + "/" + date["month"] + "/" + date["day"]
+
 row = 1
 column = 0
-sheet_position = 0
+# sheet_position = 0
 
 for index in range(7):
     url = ("https://www.railway.gov.tw/tra-tip-web/tip/tip001/tip112/querybystationblank?rideDate=%s&station=%s-%s" %(rideDate, station_num[index], station_name[index]))
@@ -32,7 +37,7 @@ for index in range(7):
     #                    index = 1       --> 逆行
 
     # 順行
-    ws = wb.create_sheet("%s(順行)" % station_name[index], sheet_position)
+    # ws = wb.create_sheet("%s(順行)" % station_name[index], sheet_position)
     all_item = all_tbody[0].find_all("td")
     # all_item[index] : index = 6C      --> 排序編號
     #                   index = 1+6C    --> 車種+車次(起點->終點)
@@ -42,23 +47,26 @@ for index in range(7):
     #                   index = 5+6C    --> 台鐵實際進站狀態
     for item in all_item:
         column += 1
-        ws.cell(row = row, column = column, value = item.get_text())
+        # ws.cell(row = row, column = column, value = item.get_text())
         if column == 6:
             row += 1
             column = 0
     row = 1
 
     #逆行
-    ws = wb.create_sheet("%s(逆行)" % station_name[index], sheet_position+1)
+    # ws = wb.create_sheet("%s(逆行)" % station_name[index], sheet_position+1)
     all_item = all_tbody[1].find_all("td")
-    sheet_position += 2
+    # sheet_position += 2
     
     for item in all_item:
         column += 1
-        ws.cell(row = row, column = column, value = item.get_text())
+        # ws.cell(row = row, column = column, value = item.get_text())
         if column == 6:
             row += 1
             column = 0
     row = 1
 
-wb.save(r"Data\Data collector %s.xlsx" %fileDate)
+# wb.save(r"Data\Data collector %s.xlsx" %fileDate)
+conn.commit()
+cursor.close()
+conn.close()

@@ -1,0 +1,1 @@
+print('\n123456'.isdigit())
