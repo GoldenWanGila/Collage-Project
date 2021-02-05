@@ -15,7 +15,7 @@ station_name = ["豐原","太原","臺中","潭子","新烏日","彰化","員林
 
 """用於設定要爬取的日期(rideDate)和儲存檔案要用的日期(fileDate)"""
 local_time = time.localtime()
-date = {"year": str(local_time.tm_year), "month": str(1), "day": str(29)}
+date = {"year": str(local_time.tm_year), "month": str(local_time.tm_mon), "day": str(local_time.tm_mday-1)}
 rideDate = date["year"] + "/" + date["month"] + "/" + date["day"]
 # 為了將檔案格式統一化，所以對month和day進行調整
 date["month"] = "0" + date["month"] if len(date["month"]) == 1 else date["month"]
