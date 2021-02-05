@@ -5,9 +5,9 @@ import time
 
 """儲存檔案要用的相關參數"""
 wb = openpyxl.Workbook()
-row = 1
-column = 0
+row = column = 1
 sheet_position = 0
+direction = ['順行','逆行']
 
 """欲爬取的站號與站名"""
 station_num = ["3230","3280","3300","3350","3340","3360","3390","0900","0960","1000","1020","1080","1100","1210","1250","3160","3470","4080","4220","4340","4400"]
@@ -34,34 +34,47 @@ for index in range(len(station_num)):
     # all_tbody[index] : index = 0       --> 順行
     #                    index = 1       --> 逆行
 
-    # 順行
-    ws = wb.create_sheet("%s(順行)" % station_name[index], sheet_position)
-    all_item = all_tbody[0].find_all("td")
-    # all_item[index] : index = 6C      --> 排序編號
-    #                   index = 1+6C    --> 車種+車次(起點->終點)
-    #                   index = 2+6C    --> 預計進站時間
-    #                   index = 3+6C    --> 終點站站名 
-    #                   index = 4+6C    --> 此班列車行駛狀態
-    #                   index = 5+6C    --> 台鐵實際進站狀態
-    for item in all_item:
-        column += 1
-        ws.cell(row = row, column = column, value = item.get_text())
-        if column == 6:
-            row += 1
-            column = 0
-    row = 1
-
-    #逆行
-    ws = wb.create_sheet("%s(逆行)" % station_name[index], sheet_position+1)
-    all_item = all_tbody[1].find_all("td")
-    sheet_position += 2
-    
-    for item in all_item:
-        column += 1
-        ws.cell(row = row, column = column, value = item.get_text())
-        if column == 6:
-            row += 1
-            column = 0
-    row = 1
+    for direction_index in range(2):
+        # direction_index = 0 --> 順行
+        # direction_index = 1 --> 逆行
+        ws = wb.create_sheet("%s(%s)" % (station_name[index], direction[direction_index]), sheet_position)
+        sheet_position += 1
+        all_item = all_tbody[direction_index].find_all("td")
+        # all_item[index] : index = 6k      item --> 排序編號
+        #                   index = 1+6k    item --> 車種+車次(起點->終點)
+        #                   index = 2+6k    item --> 預計進站時間
+        #                   index = 3+6k    item --> 終點站站名 
+        #                   index = 4+6k    item --> 此班列車行駛狀態
+        #                   index = 5+6k    item --> 台鐵實際進站狀態
+        for item in all_item:
+            if column == 7:
+                status = ''.join([x for x in item.get_text() if x.isdigit()])
+                if status == '':
+                    status = '0'
+                ws.cell(row = row, column = column, value = status)
+                row += 1
+                column = 0
+            else:
+                if column != 2:
+                    ws.cell(row = row, column = column, value = item.get_text())
+                else:
+                    """設定車種儲存"""
+                    train_catg = ''
+                    train_catg_temp = []
+                    for x in item.get_text():
+                            if x != '\n':
+                                if x.isdigit() == False:
+                                    train_catg_temp += [x]
+                                else:
+                                    train_catg = ''.join(train_catg_temp)
+                                    break
+                    """設定車次儲存"""
+                    train_num = ''.join([x for x in item.get_text() if x.isdigit()])
+                    
+                    ws.cell(row = row, column = 2, value = train_catg)
+                    ws.cell(row = row, column = 3, value = train_num)
+                    column = 3
+            column += 1
+        row = 1
 
 wb.save(r"Data\Railway\Data collector %s.xlsx" %fileDate)
