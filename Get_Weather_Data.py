@@ -20,26 +20,29 @@ date["day"] = "0" + date["day"] if len(date["day"]) == 1 else date["day"]
 fileDate = date["year"] + date["month"] + date["day"]
 crawlDate = date["year"] + "-" + date["month"] + "-" + date["day"]
 
-for index1 in range(len(station_num)):
-    url = 'https://e-service.cwb.gov.tw/HistoryDataQuery/DayDataController.do?command=viewMain&station=%s&stname=%s&datepicker=%s' %(station_num[index1], '%25E8%2587%25BA%25E4%25B8%25AD', crawlDate)
+if local_time.tm_hour >= 12:
+    for index1 in range(len(station_num)):
+        url = 'https://e-service.cwb.gov.tw/HistoryDataQuery/DayDataController.do?command=viewMain&station=%s&stname=%s&datepicker=%s' %(station_num[index1], '%25E8%2587%25BA%25E4%25B8%25AD', crawlDate)
 
-    sheet_position = index1
-    ws = wb.create_sheet(station_name[index1], sheet_position)
+        sheet_position = index1
+        ws = wb.create_sheet(station_name[index1], sheet_position)
 
-    response = requests.get(url)
-    soup = BeautifulSoup(response.text, 'html.parser')
+        response = requests.get(url)
+        soup = BeautifulSoup(response.text, 'html.parser')
 
-    all_tr = soup.find('tbody').find_all('tr')
+        all_tr = soup.find('tbody').find_all('tr')
 
-    for index2 in range(3, 27):
-        td_in_tr = all_tr[index2].find_all('td')
-        for td in td_in_tr:
-            column += 1
-            ws.cell(row=row, column=column, value=td.get_text())
-        if column == 17:
-            row += 1
-            column = 0
-        if row == 25:
-            row = 1
+        for index2 in range(3, 27):
+            td_in_tr = all_tr[index2].find_all('td')
+            for td in td_in_tr:
+                column += 1
+                ws.cell(row=row, column=column, value=td.get_text())
+            if column == 17:
+                row += 1
+                column = 0
+            if row == 25:
+                row = 1
 
-wb.save(r"Data\Weather\Data collector %s.xlsx" %fileDate)
+    wb.save(r"Data\Weather\Data collector %s.xlsx" %fileDate)
+else:
+    print("\n現在還不是爬取的時候，等到12:00過後再來\n")
