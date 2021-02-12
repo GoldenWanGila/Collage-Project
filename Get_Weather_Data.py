@@ -20,7 +20,7 @@ date["day"] = "0" + date["day"] if len(date["day"]) == 1 else date["day"]
 fileDate = date["year"] + date["month"] + date["day"]
 crawlDate = date["year"] + "-" + date["month"] + "-" + date["day"]
 
-if local_time.tm_hour >= 12:
+if (local_time.tm_hour>=12):
     for index1 in range(len(station_num)):
         url = 'https://e-service.cwb.gov.tw/HistoryDataQuery/DayDataController.do?command=viewMain&station=%s&stname=%s&datepicker=%s' %(station_num[index1], '%25E8%2587%25BA%25E4%25B8%25AD', crawlDate)
 
