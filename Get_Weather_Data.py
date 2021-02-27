@@ -13,8 +13,9 @@ row = 1
 column = 0
 
 """用於設定要爬取的日期(crawlDate)和儲存檔案要用的日期(fileDate)"""
-local_time = time.localtime()
-date = {"year": str(local_time.tm_year), "month": str(local_time.tm_mon), "day": str(local_time.tm_mday - 1)}
+second = time.time() - 86400
+local_time = time.localtime(second)
+date = {"year": str(local_time.tm_year), "month": str(local_time.tm_mon), "day": str(local_time.tm_mday)}
 date["month"] = "0" + date["month"] if len(date["month"]) == 1 else date["month"]
 date["day"] = "0" + date["day"] if len(date["day"]) == 1 else date["day"]
 fileDate = date["year"] + date["month"] + date["day"]
