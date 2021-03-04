@@ -18,7 +18,7 @@ cursor.execute(sql_select)
 data=cursor.fetchone()
 judge=0
 if len(data)!=0:
-    lastData=str(arr[1][:4])+str(arr[1][5:7])+str(arr[1][-2:])
+    lastData=str(data[0][:4])+str(data[0][5:7])+str(data[0][-2:])
     print(lastData)
 else :
     judge=1
