@@ -3,7 +3,8 @@ import requests
 import openpyxl
 import time
 
-
+column_indexs = ['ObsTime','StnPres','SeaPres','Temperature','Td_dew_point','RH','WS','WD','WSGust','WDGust','Precp',
+                'PrecpHour','SunShine','GloblRad','Visb','UVI','CloudAmount']
 station_name = ['台中','豐原','潭子','烏日','花壇','員林']
 station_num = ['467490','C0F9M0','C0F9O0','C0F9S0','C0G910','C0G650']
 
@@ -27,6 +28,11 @@ if (local_time.tm_hour>=12):
 
         sheet_position = index1
         ws = wb.create_sheet(station_name[index1], sheet_position)
+        for item in column_indexs:
+            column += 1
+            ws.cell(row=row, column=column, value=item)
+        row = 2
+        column = 0
 
         response = requests.get(url)
         soup = BeautifulSoup(response.text, 'html.parser')
@@ -37,11 +43,14 @@ if (local_time.tm_hour>=12):
             td_in_tr = all_tr[index2].find_all('td')
             for td in td_in_tr:
                 column += 1
-                ws.cell(row=row, column=column, value=td.get_text())
+                if column == 1:
+                    ws.cell(row=row, column=column, value=td.get_text()+':00')
+                else:
+                    ws.cell(row=row, column=column, value=td.get_text())
             if column == 17:
                 row += 1
                 column = 0
-            if row == 25:
+            if row == 26:
                 row = 1
 
     wb.save(r"Data\Weather\Data collector %s.xlsx" %fileDate)
