@@ -3,7 +3,7 @@ import requests
 import openpyxl
 import time
 
-column_indexs = ['ObsTime','StnPres','SeaPres','Temperature','Td_dew_point','RH','WS','WD','WSGust','WDGust','Precp',
+column_indexs = ['ObsTime','StnPres','SeaPres','Temperature','Td_Dew_Point','RH','WS','WD','WSGust','WDGust','Precp',
                 'PrecpHour','SunShine','GloblRad','Visb','UVI','CloudAmount']
 station_name = ['台中','豐原','潭子','烏日','花壇','員林']
 station_num = ['467490','C0F9M0','C0F9O0','C0F9S0','C0G910','C0G650']
@@ -46,7 +46,7 @@ if (local_time.tm_hour>=12):
                 if column == 1:
                     ws.cell(row=row, column=column, value=td.get_text()+':00')
                 else:
-                    ws.cell(row=row, column=column, value=td.get_text())
+                    ws.cell(row=row, column=column, value=td.get_text( ))
             if column == 17:
                 row += 1
                 column = 0
