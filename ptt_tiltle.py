@@ -17,8 +17,9 @@ for number in range(2400, 2439):
     rents = soup.find_all(class_='r-ent')
 
     for rent in rents:
-        title = rent.find(class_='title').get_text().replace('[標題]','')
+        title = rent.find(class_='title').get_text()
         if "[情報]" in title and rent.find(class_='mark').get_text() != 'M':
+            title = title.replace('[情報]','')
             date = rent.find(class_='date').get_text().split('/')
             month = '0' + str(int(date[0])) if len(str(int(date[0]))) == 1 else date[0]
             day = '0' + date[1] if len(date[1]) == 1 else date[1]
