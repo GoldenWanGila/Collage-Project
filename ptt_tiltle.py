@@ -8,7 +8,7 @@ sheet_position = 0
 
 ws = wb.create_sheet("PTT標題", sheet_position)
 
-for number in range(2400, 2439):
+for number in range(2400, 2441):
     url = 'https://www.ptt.cc/bbs/Railway/index%s.html' %(number)           # 爬取[情報]
 
     responses = requests.get(url)
