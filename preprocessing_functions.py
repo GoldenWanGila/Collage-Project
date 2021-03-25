@@ -28,3 +28,11 @@ def Time_discrete(time):
     return('0' + str(hour+1) if time[0] == 0 else str(hour+1))
 
 # print(Time_discrete(time))
+
+def Traintype_to_number(traintype):
+    traintype_list = ['區間','區間快','自強','普悠瑪','太魯閣']
+    note_number = 0
+    for item in traintype_list:
+        if traintype == item:
+            return note_number
+        note_number += 1
