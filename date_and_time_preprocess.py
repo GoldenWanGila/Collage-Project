@@ -2,9 +2,9 @@
 from datetime import datetime
 
 # date = '20210328'
-weekday_dict = {0:1,1:2,2:3,3:4,4:5,5:6,6:7}
 
 def Weekday_decide(date):
+    weekday_dict = {0:1,1:2,2:3,3:4,4:5,5:6,6:7}
     year = int(date[0:4])
     month = int(date[4:6]) if date[4] != '0' else int(date[5])
     day = int(date[6:8])
