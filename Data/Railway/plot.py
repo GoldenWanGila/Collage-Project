@@ -5,58 +5,58 @@ import time
 from scipy import stats
 
 
-# 降雨量-氣溫關係 start
-# 連接資料庫(記得修改參數)
-db=pymysql.connect(host="localhost",user="root",password="Dieark20000115",database="weather")
-cursor=db.cursor()
-sql_select="SHOW TABLES"
-cursor.execute(sql_select)
-data=cursor.fetchall()
-data=data[9:] # 排除掉12/15以前的資料
-x=[]
-y=[]
-for n in data:
-    table_name=n[0]
-    sql_select="SELECT Temperature FROM `"+table_name+"`;"
-    cursor.execute(sql_select)
-    data1=cursor.fetchall()
-    print(data1)
-    for m in data1:
-        x.append(m[0])
-    sql_select="SELECT Precp FROM `"+table_name+"`;"
-    cursor.execute(sql_select)
-    data2=cursor.fetchall()
-    for l in data2:
-        y.append(l[0])
-db.commit()
+# # 降雨量-氣溫(小時)關係 start
+# # 連接資料庫(記得修改參數)
+# db=pymysql.connect(host="localhost",user="root",password="Dieark20000115",database="weather")
+# cursor=db.cursor()
+# sql_select="SHOW TABLES"
+# cursor.execute(sql_select)
+# data=cursor.fetchall()
+# data=data[9:] # 排除掉12/15以前的資料
+# x=[]
+# y=[]
+# for n in data:
+#     table_name=n[0]
+#     sql_select="SELECT Temperature FROM `"+table_name+"`;"
+#     cursor.execute(sql_select)
+#     data1=cursor.fetchall()
+#     print(data1)
+#     for m in data1:
+#         x.append(m[0])
+#     sql_select="SELECT Precp FROM `"+table_name+"`;"
+#     cursor.execute(sql_select)
+#     data2=cursor.fetchall()
+#     for l in data2:
+#         y.append(l[0])
+# db.commit()
 
-for n in range(len(y)):
-    if y[n]=='None':
-        y[n]='0'
-    if y[n]=='T':
-        y[n]='0.05'
-for n in range(len(x)):
-    x[n]=float(x[n])
-    y[n]=float(y[n])
+# for n in range(len(y)):
+#     if y[n]=='None':
+#         y[n]='0'
+#     if y[n]=='T':
+#         y[n]='0.05'
+# for n in range(len(x)):
+#     x[n]=float(x[n])
+#     y[n]=float(y[n])
 
-l=sorted(zip(x,y))
+# l=sorted(zip(x,y))
 
-nx,ny=zip(*l)
+# nx,ny=zip(*l)
 
-x=list(nx)
-y=list(ny)
+# x=list(nx)
+# y=list(ny)
 
 
-print(len(x),len(y))
-plt.scatter(x, y)
-plt.xlabel('Temperature')
-plt.ylabel('RainFall')
-plt.xlim([5,35])
-plt.ylim([0,4])
-plt.xticks([5,10,15,20,25,30])
-plt.show()
+# print(len(x),len(y))
+# plt.scatter(x, y)
+# plt.xlabel('Temperature')
+# plt.ylabel('RainFall')
+# plt.xlim([5,35])
+# plt.ylim([0,4])
+# plt.xticks([5,10,15,20,25,30])
+# plt.show()
 
-# 降雨量-氣溫關係 end
+# # 降雨量-氣溫(小時)關係 end
 
 # =====================================================================================================
 
@@ -282,7 +282,7 @@ plt.show()
 
 # =====================================================================================================
 
-# # 降雨量-氣溫關係 start
+# # 降雨量-氣溫(天)關係 start
 # # 連接資料庫(記得修改參數)
 # db=pymysql.connect(host="localhost",user="root",password="Dieark20000115",database="weather")
 # cursor=db.cursor()
@@ -365,4 +365,172 @@ plt.show()
 # plt.xticks([5,10,15,20])
 # plt.show()
 
-# # 降雨量-氣溫關係 end
+# # 降雨量-氣溫(天)關係 end
+
+# ======================================================================================
+
+
+# # 氣溫(小時)-誤點關係 start
+
+# sql_select="SHOW TABLES"
+
+# x=[]
+# y=[]
+    
+# db_w=pymysql.connect(host="localhost",user="root",password="Dieark20000115",database="weather")
+# cursor_w=db_w.cursor()
+# cursor_w.execute(sql_select)
+# data_w=cursor_w.fetchall()
+
+# db_r=pymysql.connect(host="localhost",user="root",password="Dieark20000115",database="railway")
+# cursor_r=db_r.cursor()
+
+# for n in range(len(data_w)):
+#     # print(data_w[n][0])
+#     sql_s_time="SELECT ObsTime FROM `"+data_w[n][0]+"`;"
+#     cursor_w.execute(sql_s_time)
+#     data_s_time=cursor_w.fetchall()
+#     for m in range(len(data_s_time)):
+
+#         sql_s_temper="SELECT Temperature FROM `"+data_w[n][0]+"` WHERE ObsTime='"+data_s_time[m][0]+"'"
+#         cursor_w.execute(sql_s_temper)
+#         data_s_rain=cursor_w.fetchall()
+#         for i in data_s_rain:
+#             x.append(i[0])
+
+#         station_name="臺中(順行)"
+#         sql_s_delay="SELECT delay FROM `"+station_name+"` WHERE date='"+data_w[n][0]+"' AND time LIKE '"+data_s_time[m][0][:2]+":%'"
+#         cursor_r.execute(sql_s_delay)
+#         data_s_delay=cursor_r.fetchall()
+        
+#         avg=0
+#         count=0
+#         for l in data_s_delay:
+#             if len(l[0])>0:
+#                 avg+=int(l[0])
+#                 count+=1
+#         else:
+#             if count>0:
+#                 avg=avg/count
+#                 y.append('%.2f' %avg)
+#             else:
+#                 y.append(0)
+#         # print(data_s_time[m][0],'%.2f' %avg)
+
+
+# db_w.commit()
+# db_r.commit()
+
+# for n in range(len(x)):
+#     if x[n]=='None':
+#         x[n]='0'
+#     if x[n]=='T':
+#         x[n]='0'
+
+# for n in range(len(x)):
+#     x[n]=float(x[n])
+#     y[n]=float(y[n])
+
+# print(len(x),len(y))
+# plt.scatter(x, y)
+# plt.plot(y, ls='dashed')
+# plt.xlabel('Temperature')
+# plt.ylabel('delay')
+# plt.xlim([5,35])
+# plt.ylim([0,25])
+# plt.xticks([10,15,20,25,30])
+# plt.yticks([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25])
+# plt.show()
+
+# # 氣溫(小時)-誤點關係 end
+
+# ======================================================================================
+
+
+# 氣溫(天)-誤點關係 start
+
+sql_select="SHOW TABLES"
+
+x=[]
+y=[]
+    
+db_w=pymysql.connect(host="localhost",user="root",password="Dieark20000115",database="weather")
+cursor_w=db_w.cursor()
+cursor_w.execute(sql_select)
+data_w=cursor_w.fetchall()
+
+db_r=pymysql.connect(host="localhost",user="root",password="Dieark20000115",database="railway")
+cursor_r=db_r.cursor()
+
+for n in range(len(data_w)):
+    # print(data_w[n][0])
+    sql_s_time="SELECT ObsTime FROM `"+data_w[n][0]+"`;"
+    cursor_w.execute(sql_s_time)
+    data_s_time=cursor_w.fetchall()
+    for m in range(len(data_s_time)):
+
+        sql_s_temper="SELECT Temperature FROM `"+data_w[n][0]+"` WHERE ObsTime='"+data_s_time[m][0]+"'"
+        cursor_w.execute(sql_s_temper)
+        data_s_rain=cursor_w.fetchall()
+        for i in data_s_rain:
+            x.append(i[0])
+
+        station_name="臺中(順行)"
+        sql_s_delay="SELECT delay FROM `"+station_name+"` WHERE date='"+data_w[n][0]+"' AND time LIKE '"+data_s_time[m][0][:2]+":%'"
+        cursor_r.execute(sql_s_delay)
+        data_s_delay=cursor_r.fetchall()
+        
+        avg=0
+        count=0
+        for l in data_s_delay:
+            if len(l[0])>0:
+                avg+=int(l[0])
+                count+=1
+        else:
+            if count>0:
+                avg=avg/count
+                y.append('%.2f' %avg)
+            else:
+                y.append(0)
+        # print(data_s_time[m][0],'%.2f' %avg)
+
+
+db_w.commit()
+db_r.commit()
+
+for n in range(len(x)):
+    if x[n]=='None':
+        x[n]='0'
+    if x[n]=='T':
+        x[n]='0'
+
+num=0
+count=0
+for n in range(len(x)):
+    count+=float(x[n])
+    num+=1
+    if num==24:
+        x[n]=float('%.2f' %(count/24))
+        num=0
+        count=0
+
+for n in range(len(x)):
+    if (n+1)%24!=0:
+        x[n]=x[n+24-(n+1)%24]
+
+print(x)
+for n in range(len(x)):
+    x[n]=float(x[n])
+    y[n]=float(y[n])
+
+print(len(x),len(y))
+plt.scatter(x, y)
+plt.xlabel('Temperature')
+plt.ylabel('delay')
+plt.xlim([5,35])
+plt.ylim([0,25])
+plt.xticks([10,15,20,25,30])
+plt.yticks([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25])
+plt.show()
+
+# 氣溫(天)-誤點關係 end
