@@ -64,11 +64,11 @@ for station in stationName:
 
     ### 在資料庫所有資料表delete某條件列 ###
     # sql_delete="DELETE FROM `"+station+"` WHERE date='2021/01/29';"
-    sql_delete="SELECT * FROM `"+station+"` WHERE date='2020/12/15';"
-    cursor.execute(sql_delete)
-    data=cursor.fetchall()
-    if len(data)==0:
-        print("nothing")
-    db.commit()
-    print(station+" Done")
+    # sql_delete="SELECT * FROM `"+station+"` WHERE date='2020/12/15';"
+    # cursor.execute(sql_delete)
+    # data=cursor.fetchall()
+    # if len(data)==0:
+    #     print("nothing")
+    # db.commit()
+    # print(station+" Done")
 print("success")
