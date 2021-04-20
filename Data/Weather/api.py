@@ -1,5 +1,6 @@
 import pymysql
 import pandas as pd
+from pandas import DataFrame
 import time
 
 default_account="root"
@@ -59,5 +60,11 @@ while finish==0:
     if input("呈現出來?(0:N,1:Y):")==('1'or'Y'or'y'):
         print("")
         print(pd_data)
+        print("")
+    if input("儲存?(0:N,1:Y):")==('1'or'Y'or'y'):
+        print("")
+        fn=input("輸入檔名:")
+        print("儲存成功")
+        pd_data.to_json(r'./\%s.json' %fn)
         print("")
     sql="SELECT * FROM "
