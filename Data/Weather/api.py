@@ -40,10 +40,10 @@ while finish==0:
             table_name=input("輸入想查找的資料表名稱(ex:2021/01/15):")
         col_name=input("輸入想查找的欄位名稱(ex:Precp)(大小寫需正確)(未填入視為'所有'):") or "*"
         sql="SELECT %s FROM `%s`" %(col_name,table_name)
-        if input("更詳細判斷?(0:N,1:Y):")==('1'or'Y'or'y'):
-            where=input("欄位名稱=特定值(空格隔開):").split() or (-1,-1)
-            if where[0]!=-1:
-                sql="SELECT %s FROM `%s` WHERE %s = '%s'" %(col_name,table_name,where[0],where[1])
+        # if input("更詳細判斷?(0:N,1:Y):")==('1'or'Y'or'y'):
+        #     where=input("欄位名稱=特定值(空格隔開):").split() or (-1,-1)
+        #     if where[0]!=-1:
+        #         sql="SELECT %s FROM `%s` WHERE %s = '%s'" %(col_name,table_name,where[0],where[1])
     else:
         print("白癡喔，輸入錯了齁")
         continue
