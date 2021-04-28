@@ -28,7 +28,8 @@ railway_df = pd.read_json(railway_path)
 weather_attribute = list(weather_df.data[2][0].keys())
 weather_attribute.insert(0,'Date')
 railway_attribute = list(railway_df.data[2][0].keys())
-railway_attribute.insert(0,'Station_and_direction')
+railway_attribute.insert(0,'Station')
+railway_attribute.insert(1,'direction')
 
 weather_input_list = []
 for i in range(2,len(weather_df.name)):
@@ -44,7 +45,9 @@ for i in range(2,len(railway_df.name)):
         data[-1] = type_dict[data[-1]]
         data[-3] = station_name_dict[data[-3]]
         data.insert(0,railway_df.name[i])
-        data[0] = '%s_%s' %(station_name_dict[data[0][:-4]], direction_dict[data[0][-3:-1]])
+        data.insert(1,railway_df.name[i])
+        data[0] = station_name_dict[data[0][:-4]]
+        data[1] = direction_dict[data[1][-3:-1]]
         railway_input_list.append(data)
 
 weather_input_df = pd.DataFrame(weather_input_list, columns=weather_attribute)
