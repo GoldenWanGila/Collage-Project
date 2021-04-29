@@ -53,5 +53,5 @@ for i in range(2,len(railway_df.name)):
 weather_input_df = pd.DataFrame(weather_input_list, columns=weather_attribute)
 railway_input_df = pd.DataFrame(railway_input_list, columns=railway_attribute)
 
-weather_input_df.to_csv('model/inputs/weather.csv')
-railway_input_df.to_csv('model/inputs/railway.csv')
+weather_input_df.to_csv('model/inputs/weather.csv', index_label=False)
+railway_input_df.to_csv('model/inputs/railway.csv', index_label=False)
