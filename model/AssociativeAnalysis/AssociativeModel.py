@@ -4,13 +4,13 @@ import pandas as pd
 path = 'model/AssociativeAnalysis/inputs/railway.csv'
 data = pd.read_csv(path)
 
-cols_to_use = ['Station','direction','time','num','delay','type']
+cols_to_use = ['time','Station','num','delay']
 X = data[cols_to_use].copy()
 
 X = X.astype(str)
 X = X.values.tolist()
 
-association_rules = apriori(X,min_support=0.0045, min_confidence=0.1,min_lift=3,min_length=5)
+association_rules = apriori(X,min_support=0.001, min_confidence=0.1,min_lift=3,min_length=2)
 association_results = list(association_rules)
 
 for item in association_results:
