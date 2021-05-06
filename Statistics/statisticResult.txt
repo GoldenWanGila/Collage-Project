@@ -1,0 +1,108 @@
+Total number of data : 321019
+
+The number of every -Station-
+Zhongli : 14585
+Yuanlin : 14856
+Chiayi : 13555
+Keelung : 9589
+Taiyuan : 10296
+Changhua : 21636
+Douliu : 10850
+Xinzuoying : 14810
+Xinwuri : 12220
+Hsinchu : 22005
+Banqiao : 23984
+Taoyuan : 15047
+Xizhi : 17374
+Tanzi : 11088
+Zhunan : 13101
+Taichung : 16975
+Taipei : 24072
+Tainan : 16250
+Miaoli : 9351
+Fengyuan : 14586
+Kaohsiung : 14789
+
+The number of every -direction-
+backward : 161165
+forward : 159854
+
+The number of every -time-
+not_commuting_time : 206532
+to_work : 53873
+off_work : 60614
+
+The number of every -dest-
+Zhongli : 979
+Hsinchu : 17437
+Changhua : 18606
+Miaoli : 11949
+Chiayi : 30851
+Chaozhou : 36114
+Beihu : 6194
+Pingtung : 13547
+Xinzuoying : 6954
+Farliao : 4268
+Hukou : 693
+Dounan : 1010
+Yuanlin : 1846
+Sanyi : 691
+Tianzhong : 624
+Yangmei : 32
+Su ao : 4079
+Keelung : 49953
+Hualien : 11666
+Fulong : 1056
+Songshan : 552
+Qidu : 22225
+Ruifang : 6623
+Nangang : 1700
+Taitung : 5104
+Checheng : 396
+Xinying : 583
+Ershui : 1521
+Tainan : 3081
+Douliu : 1164
+Tongluo : 847
+Houli : 16533
+Taichung : 3899
+Shalun : 2849
+Taipei Surround Island : 1778
+MinXiong : 616
+Yingge : 543
+Shulin : 10462
+Fengyuan : 6512
+Xinwuri : 625
+Zhunan : 1100
+Tongxiao : 3344
+Dajia : 1835
+Shalu : 495
+Kaohsiung : 16
+Zhubei : 251
+Zhiben : 380
+Shanhua : 1001
+Yongkang : 678
+Neiwan : 438
+Liujia : 2625
+Zhudong : 75
+Taoyuan : 308
+Xizhi : 144
+Su aoxin : 308
+Fenglin : 154
+Shuaxgxi : 231
+Zhixue : 154
+Shoufeng : 308
+Nan ao : 462
+Yilan : 462
+Taipei : 88
+
+The number of every -delay-
+short_delay : 121560
+no_delay : 167111
+long_delay : 32348
+
+The number of every -type-
+D : 226670
+B : 61562
+C : 18736
+A : 14051
