@@ -23,7 +23,7 @@ def all_task():
     print("======所有指令======")
     print('1:列出所有資料"表"')
     print("2:列出指定資料表的內容")
-    print("3:列出指定車次")
+    print("3:列出多種車次的所有資料")
     print("4:列出指定資料的上下n筆資料")
     print("9:重新連接其它資料庫")
     print("0:離開")
@@ -91,18 +91,23 @@ def task2():
         arr.append(col_name)
     sql = "SELECT %s FROM `%s`" % (col_name, table_name)
     result(sql, arr, data)
+
 def task3():
-    train_num = int(input("輸入想查找的車次(ex:118):"))
+    n = int(input("指定n筆資料:")) or 1
+    all_num = ''
+    for i in range(n):
+        all_num += "OR num = '%d' " %(int(input("指定車次%s:" % (i+1))))
     sql = "SHOW TABLES"
     arr = easy_sql(sql)
     data=[]
-    for n in arr:
-        sql = "SELECT %s FROM `%s` WHERE num = '%d'" % ("*", n, train_num)
+    for table in arr:
+        sql = "SELECT %s FROM `%s` WHERE %s" % ("*", table, all_num[3:])
         cursor.execute(sql)
         data_old = cursor.fetchall()
         data.extend(data_old)
-    arr=["", "date", "time", "num", "dest", "delay", "type"]
+    arr=["id", "date", "time", "num", "dest", "delay", "type"]
     result(sql, arr, data)
+
 def task4():
     table_name = ''
     sql = "SHOW TABLES"
