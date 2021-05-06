@@ -93,18 +93,20 @@ def task2():
     result(sql, arr, data)
 
 def task3():
-    n = int(input("指定n筆資料:")) or 1
+    table_name = ''
+    sql = "SHOW TABLES"
+    arr = easy_sql(sql)
+    data = None
+    while len(table_name)<1:
+        print("-"*100)
+        print("可輸入:", *arr)
+        print("-"*100)
+        table_name = input("指定站名:")
+    n = int(input("指定n筆車次資料:")) or 1
     all_num = ''
     for i in range(n):
         all_num += "OR num = '%d' " %(int(input("指定車次%s:" % (i+1))))
-    sql = "SHOW TABLES"
-    arr = easy_sql(sql)
-    data=[]
-    for table in arr:
-        sql = "SELECT %s FROM `%s` WHERE %s" % ("*", table, all_num[3:])
-        cursor.execute(sql)
-        data_old = cursor.fetchall()
-        data.extend(data_old)
+    sql = "SELECT %s FROM `%s` WHERE %s" % ("*", table_name, all_num[3:])
     arr=["id", "date", "time", "num", "dest", "delay", "type"]
     result(sql, arr, data)
 
