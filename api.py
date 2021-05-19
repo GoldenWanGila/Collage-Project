@@ -5,7 +5,7 @@ import time
 
 # 預設輸入
 default_account = "root"
-default_pw = "Dieark20000115"
+default_pw = "HaoEnYunTing1314"
 default_db = "railway"
 
 host = "localhost"

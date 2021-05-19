@@ -10,7 +10,7 @@ import glob
 print ("start")
 
 # (主機名稱,帳號,密碼,資料庫名稱)
-db=pymysql.connect(host="localhost",user="root",password="Dieark20000115",database="railway")
+db=pymysql.connect(host="localhost",user="root",password="HaoEnYunTing1314",database="railway")
 cursor=db.cursor()
 # 選擇資料表
 sql_select="SELECT date FROM `豐原(順行)` ORDER BY date DESC ,time DESC LIMIT 0,1;" 
@@ -23,7 +23,7 @@ if len(data)!=0:
 else :
     judge=1
 
-for filename in glob.glob(r'D:\Dieark\pythons\flask1\Collage-Project\Data\Railway\*.xlsx'): #需要修改路徑名稱
+for filename in glob.glob(r'C:\Users\sunlo\Desktop\大學\專題\專題\台鐵誤點\Data\Railway\*.xlsx'): #需要修改路徑名稱
     if (filename[-13:-5]==lastData): # 比對excel名稱跟資料庫資料
         judge=1
         continue
