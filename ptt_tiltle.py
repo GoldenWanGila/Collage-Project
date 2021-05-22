@@ -8,7 +8,7 @@ sheet_position = 0
 
 ws = wb.create_sheet("PTT標題", sheet_position)
 
-for number in range(2400, 2465):
+for number in range(2400, 2481):
     url = 'https://www.ptt.cc/bbs/Railway/index%s.html' %(number)           # 爬取[情報]
 
     responses = requests.get(url)
@@ -19,7 +19,7 @@ for number in range(2400, 2465):
 
         for rent in rents:
             title = rent.find(class_='title').get_text()
-            if "[情報]" in title and rent.find(class_='mark').get_text() != 'M' and ('Re' not in title):
+            if ("[情報]" in title) and (rent.find(class_='mark').get_text() != 'M') and ('Re' not in title) and ('JR' not in title) and ('新幹線' not in title) and ('日本' not in title):
                 title = title.replace('[情報]','')
                 date = rent.find(class_='date').get_text().split('/')
                 month = '0' + str(int(date[0])) if len(str(int(date[0]))) == 1 else date[0]
