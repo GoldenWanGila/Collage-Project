@@ -1,7 +1,2 @@
-import pandas
-
-path = r'model\inputs\railway.csv'
-data = pandas.read_csv(path)
-data = data[0:5].copy()
-
-print(data['time'][data[data['num']==167 and data['Station']=='Chiayi'].index])
+s = [1,2,3,4,5,6]
+print(str(s))

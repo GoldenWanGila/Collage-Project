@@ -1,0 +1,12 @@
+Algorithm: sklearn.ensemble.RandomForestClassifier
+Accuracy : 0.41539781863547925
+
+attribute: Station, direction, time, num, dest, type
+Station: Miaoli, Fengyuan, Taiyuan, Taichung, Chenggong, Xinwuri, Changhua, Yuanlin
+
+preprocess algorithm: slearn.preporcessing.LabelEncoder -> 將attribute中的文字內容轉換成數字(為了讓分類分析能跑)
+model parameter: (n_estimators=300, max_depth=8, criterion='entropy', random_state=0)
+
+cross_val_score(cv=10)
+
+problem：預測值只有0或1
