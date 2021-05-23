@@ -3,7 +3,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import cross_val_score
 
-path = "model/ClassificationAnalysis/Taichung/inputs/railway.csv"
+path = r"model/Taichung/inputs/railway.csv"
 data = pd.read_csv(path)
 
 data.drop(data[data['delay'].isnull()].index, inplace=True)

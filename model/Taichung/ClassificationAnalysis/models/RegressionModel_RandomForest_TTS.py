@@ -4,7 +4,7 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import mean_absolute_error
 from sklearn.model_selection import train_test_split
 
-path = "model/ClassificationAnalysis/Taichung/inputs/railway.csv"
+path = r"model/Taichung/inputs/railway.csv"
 data = pd.read_csv(path)
 
 data.drop(data[data['delay'].isnull()].index, inplace=True)
