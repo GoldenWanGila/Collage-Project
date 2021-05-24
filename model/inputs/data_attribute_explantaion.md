@@ -1,4 +1,4 @@
-# Data Attribute Expalanation
+# Data Attribute Explanation
 **本檔案用於說明 railway.csv 以及 weather.csv 中的 attributes**
 ****
 ****
