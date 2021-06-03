@@ -14,7 +14,7 @@ for station in stations:
     for num in data['num']:
         if num not in nums:
             nums.append(num)
-
+    nums.sort()
     """
     tnd: times of no delay
     tsd: times of short delay
