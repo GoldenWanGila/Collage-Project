@@ -12,7 +12,7 @@ for station in stations:
 
     nums = []
     for num in data['num']:
-        if num not in nums:
+        if num not in nums and (num < 500 or num > 599) and num < 5000:
             nums.append(num)
     nums.sort()
     """
