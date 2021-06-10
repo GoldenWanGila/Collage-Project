@@ -1,4 +1,5 @@
 import pandas as pd
+from pandas.core.accessor import delegate_names
 
 stations = ['Changhua','Chenggong','Fengyuan','Taichung','Taiyuan','Xinwuri','Yuanlin']
 for station in stations:
@@ -23,22 +24,27 @@ for station in stations:
     mld: mean of long delay
     """
     num_and_d = {}     # num and delay
+    delete_list = []
     for index in range(len(nums)):
         ans = []
         df = data[data['num']==nums[index]]
-        tnd = len(df[df['delay']==0])
-        tld = len(df[df['delay']>=5])
-        tsd = len(df)-tld-tnd
-        msd = 0 if tsd == 0 else sum(list(df[df['delay']<5].delay))/tsd
-        mld = 0 if tld == 0 else sum(list(df[df['delay']>=5].delay))/tld
-        ans.append(str(nums[index]))
-        ans.append(tnd/len(df))
-        ans.append(tsd/len(df))
-        ans.append(tld/len(df))
-        ans.append(msd)
-        ans.append(mld)
-        num_and_d[index] = ans
+        if len(df) >= 10:
+            tnd = len(df[df['delay']==0])
+            tld = len(df[df['delay']>=5])
+            tsd = len(df)-tld-tnd
+            msd = 0 if tsd == 0 else sum(list(df[df['delay']<5].delay))/tsd
+            mld = 0 if tld == 0 else sum(list(df[df['delay']>=5].delay))/tld
+            ans.append(str(nums[index]))
+            ans.append(tnd/len(df))
+            ans.append(tsd/len(df))
+            ans.append(tld/len(df))
+            ans.append(msd)
+            ans.append(mld)
+            num_and_d[index] = ans
+        else:
+            delete_list.append(nums[index])
 
+    print('Being deleted nums in %s station:'%station, delete_list)
     result = pd.DataFrame(num_and_d,index=['num','pnd','psd','pld','msd','mld']).T
 
     # print(result.head())
