@@ -34,20 +34,20 @@ for station in stations:
             tsd = len(df)-tld-tnd
             msd = 0 if tsd == 0 else sum(list(df[df['delay']<5].delay))/tsd
             mld = 0 if tld == 0 else sum(list(df[df['delay']>=5].delay))/tld
+            pred = round((tsd/len(df))*msd+(tld/len(df))*mld) if (tnd/len(df)) < 0.75 else 0
             ans.append(str(nums[index]))
             ans.append(tnd/len(df))
             ans.append(tsd/len(df))
             ans.append(tld/len(df))
             ans.append(msd)
             ans.append(mld)
+            ans.append(pred)
             num_and_d[index] = ans
         else:
             delete_list.append(nums[index])
 
     print('Being deleted nums in %s station:'%station, delete_list)
-    result = pd.DataFrame(num_and_d,index=['num','pnd','psd','pld','msd','mld']).T
-
-    # print(result.head())
+    result = pd.DataFrame(num_and_d,index=['num','pnd','psd','pld','msd','mld','pred']).T
     result.to_csv(r'prediction/outputs/%s.csv'%station, index=False)
 """
 outputs:
