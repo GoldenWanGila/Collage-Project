@@ -1,41 +1,87 @@
+from typing import final
 import pandas as pd
 
-# TODO(get RME table: 區間事故、區間平日尖峰、區間平日離峰、區間假日、自強事故、自強平日、自強假日、自強連假)
+# get RME table: 區間事故、區間平日尖峰、區間平日離峰、區間假日、自強事故、自強平日、自強假日、自強連假
+localTrain_weekday_onPeak_dataFrame = pd.read_csv('區間平日尖峰MSE.csv', index_col=0)
+localTrain_weekday_offPeak_dataFrame = pd.read_csv('區間平日離峰MSE.csv', index_col=0)
+localTrain_weekend_dataFrame = pd.read_csv('區間假日MSE.csv', index_col=0)
+TzeChiang_weekday_dataFrame = pd.read_csv('', index_col=0)
+TzeChiang_weekend_dataFrame = pd.read_csv('', index_col=0)
+TzeChiang_longWeekend_dataFrame = pd.read_csv('', index_col=0)
 
-def station(station:str, trainNumber:int, setupDelayTime:int, isAccident:bool, isWeekDay:bool, isOnPeak:bool)->int:
+stationList = ['Fengyuan', 'Taiyuan', 'Taichung', 'Xinwuri', 'Chenggong', 'Changhua', 'Yuanlin']
 
-    trainType = getTrainCategory(trainNumber)
-
-    if station == 'Taichung':
+def getOffsetDelay(station:str, time:str, trainNumber:int, setupDelayTime:int, isAccident:bool, weekdayCatagory:str)->list[int]:
+    if isLocalTrain(trainNumber):
         if isAccident:
-            accidentFunction()
+            accidentFunction(isLocalTrain(trainNumber), station)
         else:
-            if isWeekDay:
-                if isOnPeak:
-                    onPeakFunction()
+            if weekdayCatagory == 'weekday':
+                if isOnPeak(time):
+                    onPeakFunction(station)
                 else:
-                    offPeakFunction()
+                    offPeakFunction(station)
             else:
-                weekEndFunction()
+                weekEndFunction(isLocalTrain(trainNumber), station)
+    else:
+        if isAccident:
+            accidentFunction(isLocalTrain(trainNumber), station)
+        else:
+            if weekdayCatagory == 'weekday':
+                weekDayFunction(station)
+            elif weekdayCatagory == 'weekend':
+                weekEndFunction(isLocalTrain(trainNumber), station)
+            else:
+                longWeekDayFunction(station)
 
-def getTrainCategory(trainNumber:int)->str:
+def accidentFunction(isLocalTrain:bool, station:str, setupDelayTime:int):
+    if isLocalTrain:
+        pass
+    else:
+        pass
 
-    if trainNumber < 500:
-        return '自強'
+def onPeakFunction(station:str, setupDelayTime:int)->list[int]:
+    targetRow = localTrain_weekday_onPeak_dataFrame[localTrain_weekday_onPeak_dataFrame.index == station]
+    delayList = []
+    openFlag = False
 
-    if trainNumber < 999:
-        return '莒光'
+    for col in targetRow:
+        delay = (targetRow[col].values)[0]
+        if openFlag:
+            if delay >= 1.5:
+                delayList.append(round(delay)+setupDelayTime)
+            else:
+                delayList.append(setupDelayTime)
+        if delay == '--':
+            openFlag = True
+        else:
+            pass
     
-    return '區間'
+    return delayList
 
-def accidentFunction(trainType:str):
+def offPeakFunction(station:str, setupDelayTime:int):
     pass
 
-def onPeakFunction(trainType:str):
+def weekEndFunction(isLocalTrain:bool, station:str, setupDelayTime:int):
+    if isLocalTrain:
+        pass
+    else:
+        pass
+
+def weekDayFunction(station:str, setupDelayTime:int):
     pass
 
-def offPeakFunction(trainType:str):
+def longWeekDayFunction(station:str, setupDelayTime:int):
     pass
 
-def weekEndFunction(trainType:str):
-    pass
+def isLocalTrain(trainNumber:int)->bool:
+    if trainNumber < 500:
+        return False
+    return True
+
+def isOnPeak(time:str)->bool:
+    if (time >= '06:00') and (time <= '08:00'):
+        return True
+    if (time >= '17:00') and (time <= '20:00'):
+        return True
+    return False
