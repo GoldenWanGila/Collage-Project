@@ -48,6 +48,7 @@ def onPeakFunction(station:str, setupDelayTime:int, isClockwise:bool)->list[int]
         delay = (targetRow[col].values)[0]
         if openFlag:
             if delay == '--':
+                delayList.append(0)
                 openFlag = False
             elif float(delay) >= 1.5:
                 delayList.append(round(float(delay))+setupDelayTime)
@@ -69,6 +70,7 @@ def offPeakFunction(station:str, setupDelayTime:int, isClockwise:bool):
         delay = (targetRow[col].values)[0]
         if openFlag:
             if delay == '--':
+                delayList.append(0)
                 openFlag = False
             elif float(delay) >= 1.5:
                 delayList.append(round(float(delay))+setupDelayTime)
@@ -91,6 +93,7 @@ def weekEndFunction(isLocalTrain:bool, station:str, setupDelayTime:int, isClockw
             delay = (targetRow[col].values)[0]
             if openFlag:
                 if delay == '--':
+                    delayList.append(0)
                     openFlag = False
                 elif float(delay) >= 1.5:
                     delayList.append(round(float(delay))+setupDelayTime)
