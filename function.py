@@ -1,38 +1,37 @@
-from typing import final
 import pandas as pd
 
 # get RME table: 區間事故、區間平日尖峰、區間平日離峰、區間假日、自強事故、自強平日、自強假日、自強連假
 localTrain_weekday_onPeak_dataFrame = pd.read_csv('區間平日尖峰MSE.csv', index_col=0)
 localTrain_weekday_offPeak_dataFrame = pd.read_csv('區間平日離峰MSE.csv', index_col=0)
 localTrain_weekend_dataFrame = pd.read_csv('區間假日MSE.csv', index_col=0)
-TzeChiang_weekday_dataFrame = pd.read_csv('', index_col=0)
-TzeChiang_weekend_dataFrame = pd.read_csv('', index_col=0)
-TzeChiang_longWeekend_dataFrame = pd.read_csv('', index_col=0)
+TzeChiang_weekday_dataFrame = pd.read_csv('自強中部平日MSE.csv', index_col=0)
+TzeChiang_weekend_dataFrame = pd.read_csv('自強中部假日MSE.csv', index_col=0)
+TzeChiang_longWeekend_dataFrame = pd.read_csv('自強中部連假日MSE.csv', index_col=0)
 
 stationList = ['Fengyuan', 'Taiyuan', 'Taichung', 'Xinwuri', 'Chenggong', 'Changhua', 'Yuanlin']
 
 def getOffsetDelay(station:str, time:str, trainNumber:int, setupDelayTime:int, isAccident:bool, dayOfTheWeek:int)->list[int]:
     if isLocalTrain(trainNumber):
         if isAccident:
-            accidentFunction(isLocalTrain(trainNumber), station, setupDelayTime)
+            return accidentFunction(isLocalTrain(trainNumber), station, setupDelayTime)
         else:
             if isWeekday(dayOfTheWeek) == 'weekday':
                 if isOnPeak(time):
-                    onPeakFunction(station, setupDelayTime)
+                    return onPeakFunction(station, setupDelayTime)
                 else:
-                    offPeakFunction(station, setupDelayTime)
+                    return offPeakFunction(station, setupDelayTime)
             else:
-                weekEndFunction(isLocalTrain(trainNumber), station, setupDelayTime)
+                return weekEndFunction(isLocalTrain(trainNumber), station, setupDelayTime)
     else:
         if isAccident:
-            accidentFunction(isLocalTrain(trainNumber), station, setupDelayTime)
+            return accidentFunction(isLocalTrain(trainNumber), station, setupDelayTime)
         else:
             if isWeekday(dayOfTheWeek) == 'weekday':
-                weekDayFunction(station, setupDelayTime)
+                return weekDayFunction(station, setupDelayTime)
             elif isWeekday(dayOfTheWeek) == 'weekend':
-                weekEndFunction(isLocalTrain(trainNumber), station, setupDelayTime)
+                return weekEndFunction(isLocalTrain(trainNumber), station, setupDelayTime)
             else:
-                longWeekDayFunction(station, setupDelayTime)
+                return longWeekDayFunction(station, setupDelayTime)
 
 def accidentFunction(isLocalTrain:bool, station:str, setupDelayTime:int):
     if isLocalTrain:
@@ -48,7 +47,7 @@ def onPeakFunction(station:str, setupDelayTime:int)->list[int]:
     for col in targetRow:
         delay = (targetRow[col].values)[0]
         if openFlag:
-            if delay >= 1.5:
+            if float(delay) >= 1.5:
                 delayList.append(round(delay)+setupDelayTime)
             else:
                 delayList.append(setupDelayTime)
@@ -67,7 +66,7 @@ def offPeakFunction(station:str, setupDelayTime:int):
     for col in targetRow:
         delay = (targetRow[col].values)[0]
         if openFlag:
-            if delay >= 1.5:
+            if float(delay) >= 1.5:
                 delayList.append(round(delay)+setupDelayTime)
             else:
                 delayList.append(setupDelayTime)
@@ -87,7 +86,7 @@ def weekEndFunction(isLocalTrain:bool, station:str, setupDelayTime:int):
         for col in targetRow:
             delay = (targetRow[col].values)[0]
             if openFlag:
-                if delay >= 1.5:
+                if float(delay) >= 1.5:
                     delayList.append(round(delay)+setupDelayTime)
                 else:
                     delayList.append(setupDelayTime)
@@ -95,62 +94,58 @@ def weekEndFunction(isLocalTrain:bool, station:str, setupDelayTime:int):
                 delayList.append(0)
                 if delay == '--':
                     openFlag = True
+
+        return delayList
     else:
         targetRow = TzeChiang_weekend_dataFrame[TzeChiang_weekend_dataFrame.index == station]
-        delayList = []
+        stationToDelay = dict(zip(stationList, [0]*7))
         openFlag = False
 
         for col in targetRow:
             delay = (targetRow[col].values)[0]
             if openFlag:
-                if delay >= 2:
-                    delayList.append(round(delay)+setupDelayTime)
+                if float(delay) >= 2:
+                    stationToDelay[col] = round(delay)+setupDelayTime
                 else:
-                    delayList.append(setupDelayTime)
-            else:
-                delayList.append(0)
-                if delay == '--':
-                    openFlag = True
+                    stationToDelay[col] = setupDelayTime
+            if delay == '--':
+                openFlag = True
 
-    return delayList
+        return list(stationToDelay.values)
 
 def weekDayFunction(station:str, setupDelayTime:int):
-    targetRow = TzeChiang_weekday_dataFrame[TzeChiang_weekday_dataFrame.index == station]
-    delayList = []
+    targetRow = TzeChiang_weekend_dataFrame[TzeChiang_weekend_dataFrame.index == station]
+    stationToDelay = dict(zip(stationList, [0]*7))
     openFlag = False
 
     for col in targetRow:
         delay = (targetRow[col].values)[0]
         if openFlag:
-            if delay >= 2:
-                delayList.append(round(delay)+setupDelayTime)
+            if float(delay) >= 2:
+                stationToDelay[col] = round(delay)+setupDelayTime
             else:
-                delayList.append(setupDelayTime)
-        else:
-            delayList.append(0)
-            if delay == '--':
-                openFlag = True
+                stationToDelay[col] = setupDelayTime
+        if delay == '--':
+            openFlag = True
 
-    return delayList
+    return list(stationToDelay.values)
 
 def longWeekDayFunction(station:str, setupDelayTime:int):
-    targetRow = TzeChiang_longWeekend_dataFrame[TzeChiang_longWeekend_dataFrame.index == station]
-    delayList = []
+    targetRow = TzeChiang_weekend_dataFrame[TzeChiang_weekend_dataFrame.index == station]
+    stationToDelay = dict(zip(stationList, [0]*7))
     openFlag = False
 
     for col in targetRow:
         delay = (targetRow[col].values)[0]
         if openFlag:
-            if delay >= 2:
-                delayList.append(round(delay)+setupDelayTime)
+            if float(delay) >= 2:
+                stationToDelay[col] = round(delay)+setupDelayTime
             else:
-                delayList.append(setupDelayTime)
-        else:
-            delayList.append(0)
-            if delay == '--':
-                openFlag = True
+                stationToDelay[col] = setupDelayTime
+        if delay == '--':
+            openFlag = True
 
-    return delayList
+    return list(stationToDelay.values)
 
 def isLocalTrain(trainNumber:int)->bool:
     if trainNumber < 500:
