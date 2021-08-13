@@ -47,14 +47,16 @@ def onPeakFunction(station:str, setupDelayTime:int, isClockwise:bool)->list[int]
     for col in targetRow:
         delay = (targetRow[col].values)[0]
         if openFlag:
+            if delay == '--':
+                openFlag = False
             if float(delay) >= 1.5:
-                delayList.append(round(delay)+setupDelayTime)
+                delayList.append(round(float(delay))+setupDelayTime)
             else:
                 delayList.append(setupDelayTime)
         else:
             delayList.append(0)
             if delay == '--':
-                openFlag = False if isClockwise else True
+                openFlag = True
     
     return delayList
 
@@ -66,14 +68,16 @@ def offPeakFunction(station:str, setupDelayTime:int, isClockwise:bool):
     for col in targetRow:
         delay = (targetRow[col].values)[0]
         if openFlag:
+            if delay == '--':
+                openFlag = False
             if float(delay) >= 1.5:
-                delayList.append(round(delay)+setupDelayTime)
+                delayList.append(round(float(delay))+setupDelayTime)
             else:
                 delayList.append(setupDelayTime)
         else:
             delayList.append(0)
             if delay == '--':
-                openFlag = False if isClockwise else True
+                openFlag = True
     
     return delayList
 
@@ -86,14 +90,16 @@ def weekEndFunction(isLocalTrain:bool, station:str, setupDelayTime:int, isClockw
         for col in targetRow:
             delay = (targetRow[col].values)[0]
             if openFlag:
+                if delay == '--':
+                    openFlag = False
                 if float(delay) >= 1.5:
-                    delayList.append(round(delay)+setupDelayTime)
+                    delayList.append(round(float(delay))+setupDelayTime)
                 else:
                     delayList.append(setupDelayTime)
             else:
                 delayList.append(0)
                 if delay == '--':
-                    openFlag = False if isClockwise else True
+                    openFlag = True
         
         return delayList
     else:
@@ -104,15 +110,17 @@ def weekEndFunction(isLocalTrain:bool, station:str, setupDelayTime:int, isClockw
         for col in targetRow:
             delay = (targetRow[col].values)[0]
             if openFlag:
+                if delay == '--':
+                    openFlag = False
                 if float(delay) >= 2:
-                    stationToDelay[col] = round(delay)+setupDelayTime
+                    stationToDelay[col] = round(float(delay))+setupDelayTime
                 else:
                     stationToDelay[col] = setupDelayTime
             else:
                 if delay == '--':
                     openFlag = True
 
-        return list(stationToDelay.values)
+        return list(stationToDelay.values())
 
 def weekDayFunction(station:str, setupDelayTime:int, isClockwise:bool):
     targetRow = TzeChiang_weekday_dataFrame[TzeChiang_weekday_dataFrame.index == station]
@@ -122,15 +130,17 @@ def weekDayFunction(station:str, setupDelayTime:int, isClockwise:bool):
     for col in targetRow:
         delay = (targetRow[col].values)[0]
         if openFlag:
+            if delay == '--':
+                openFlag = False
             if float(delay) >= 2:
-                stationToDelay[col] = round(delay)+setupDelayTime
+                stationToDelay[col] = round(float(delay))+setupDelayTime
             else:
                 stationToDelay[col] = setupDelayTime
         else:
             if delay == '--':
-                openFlag = False if isClockwise else True
+                openFlag = True
 
-    return list(stationToDelay.values)
+    return list(stationToDelay.values())
 
 def longWeekDayFunction(station:str, setupDelayTime:int, isClockwise:bool):
     targetRow = TzeChiang_longWeekend_dataFrame[TzeChiang_longWeekend_dataFrame.index == station]
@@ -140,15 +150,17 @@ def longWeekDayFunction(station:str, setupDelayTime:int, isClockwise:bool):
     for col in targetRow:
         delay = (targetRow[col].values)[0]
         if openFlag:
+            if delay == '--':
+                openFlag = False
             if float(delay) >= 2:
-                stationToDelay[col] = round(delay)+setupDelayTime
+                stationToDelay[col] = round(float(delay))+setupDelayTime
             else:
                 stationToDelay[col] = setupDelayTime
         else:
             if delay == '--':
-                openFlag = False if isClockwise else True
+                openFlag = True
 
-    return list(stationToDelay.values)
+    return list(stationToDelay.values())
 
 def isLocalTrain(trainNumber:int)->bool:
     if trainNumber < 500:
