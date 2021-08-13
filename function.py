@@ -49,7 +49,7 @@ def onPeakFunction(station:str, setupDelayTime:int, isClockwise:bool)->list[int]
         if openFlag:
             if delay == '--':
                 openFlag = False
-            if float(delay) >= 1.5:
+            elif float(delay) >= 1.5:
                 delayList.append(round(float(delay))+setupDelayTime)
             else:
                 delayList.append(setupDelayTime)
@@ -70,7 +70,7 @@ def offPeakFunction(station:str, setupDelayTime:int, isClockwise:bool):
         if openFlag:
             if delay == '--':
                 openFlag = False
-            if float(delay) >= 1.5:
+            elif float(delay) >= 1.5:
                 delayList.append(round(float(delay))+setupDelayTime)
             else:
                 delayList.append(setupDelayTime)
@@ -92,7 +92,7 @@ def weekEndFunction(isLocalTrain:bool, station:str, setupDelayTime:int, isClockw
             if openFlag:
                 if delay == '--':
                     openFlag = False
-                if float(delay) >= 1.5:
+                elif float(delay) >= 1.5:
                     delayList.append(round(float(delay))+setupDelayTime)
                 else:
                     delayList.append(setupDelayTime)
@@ -112,7 +112,7 @@ def weekEndFunction(isLocalTrain:bool, station:str, setupDelayTime:int, isClockw
             if openFlag:
                 if delay == '--':
                     openFlag = False
-                if float(delay) >= 2:
+                elif float(delay) >= 2:
                     stationToDelay[col] = round(float(delay))+setupDelayTime
                 else:
                     stationToDelay[col] = setupDelayTime
@@ -132,7 +132,7 @@ def weekDayFunction(station:str, setupDelayTime:int, isClockwise:bool):
         if openFlag:
             if delay == '--':
                 openFlag = False
-            if float(delay) >= 2:
+            elif float(delay) >= 2:
                 stationToDelay[col] = round(float(delay))+setupDelayTime
             else:
                 stationToDelay[col] = setupDelayTime
@@ -152,7 +152,7 @@ def longWeekDayFunction(station:str, setupDelayTime:int, isClockwise:bool):
         if openFlag:
             if delay == '--':
                 openFlag = False
-            if float(delay) >= 2:
+            elif float(delay) >= 2:
                 stationToDelay[col] = round(float(delay))+setupDelayTime
             else:
                 stationToDelay[col] = setupDelayTime
@@ -174,7 +174,7 @@ def isOnPeak(time:str)->bool:
         return True
     return False
 
-def isWeekday(dayOfTheWeek:int)->bool:
+def isWeekday(dayOfTheWeek:int)->str:
     if int(dayOfTheWeek) in [1,2,3,4,5]:
-        return True
-    return False
+        return 'weekday'
+    return 'weekend'
