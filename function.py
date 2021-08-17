@@ -48,14 +48,14 @@ def onPeakFunction(station:str, setupDelayTime:int, isClockwise:bool)->list[int]
         delay = (targetRow[col].values)[0]
         if openFlag:
             if delay == '--':
-                delayList.append(0)
+                delayList.append(setupDelayTime)
                 openFlag = False
             elif float(delay) >= 1.5:
                 delayList.append(round(float(delay))+setupDelayTime)
             else:
                 delayList.append(setupDelayTime)
         else:
-            delayList.append(0)
+            delayList.append(setupDelayTime)
             if delay == '--':
                 openFlag = True
     
@@ -70,14 +70,14 @@ def offPeakFunction(station:str, setupDelayTime:int, isClockwise:bool):
         delay = (targetRow[col].values)[0]
         if openFlag:
             if delay == '--':
-                delayList.append(0)
+                delayList.append(setupDelayTime)
                 openFlag = False
             elif float(delay) >= 1.5:
                 delayList.append(round(float(delay))+setupDelayTime)
             else:
                 delayList.append(setupDelayTime)
         else:
-            delayList.append(0)
+            delayList.append(setupDelayTime)
             if delay == '--':
                 openFlag = True
     
@@ -93,14 +93,14 @@ def weekEndFunction(isLocalTrain:bool, station:str, setupDelayTime:int, isClockw
             delay = (targetRow[col].values)[0]
             if openFlag:
                 if delay == '--':
-                    delayList.append(0)
+                    delayList.append(setupDelayTime)
                     openFlag = False
                 elif float(delay) >= 1.5:
                     delayList.append(round(float(delay))+setupDelayTime)
                 else:
                     delayList.append(setupDelayTime)
             else:
-                delayList.append(0)
+                delayList.append(setupDelayTime)
                 if delay == '--':
                     openFlag = True
         
@@ -127,7 +127,7 @@ def weekEndFunction(isLocalTrain:bool, station:str, setupDelayTime:int, isClockw
 
 def weekDayFunction(station:str, setupDelayTime:int, isClockwise:bool):
     targetRow = TzeChiang_weekday_dataFrame[TzeChiang_weekday_dataFrame.index == station]
-    stationToDelay = dict(zip(stationList, [0]*7))
+    stationToDelay = dict(zip(stationList, [setupDelayTime]*7))
     openFlag = True if isClockwise else False
 
     for col in targetRow:
@@ -147,7 +147,7 @@ def weekDayFunction(station:str, setupDelayTime:int, isClockwise:bool):
 
 def longWeekDayFunction(station:str, setupDelayTime:int, isClockwise:bool):
     targetRow = TzeChiang_longWeekend_dataFrame[TzeChiang_longWeekend_dataFrame.index == station]
-    stationToDelay = dict(zip(stationList, [0]*7))
+    stationToDelay = dict(zip(stationList, [setupDelayTime]*7))
     openFlag = True if isClockwise else False
 
     for col in targetRow:
