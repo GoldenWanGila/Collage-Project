@@ -107,7 +107,7 @@ def weekEndFunction(isLocalTrain:bool, station:str, setupDelayTime:int, isClockw
         return delayList
     else:
         targetRow = TzeChiang_weekend_dataFrame[TzeChiang_weekend_dataFrame.index == station]
-        stationToDelay = dict(zip(stationList, [0]*7))
+        stationToDelay = dict(zip(stationList, [setupDelayTime]*7))
         openFlag = False
 
         for col in targetRow:
