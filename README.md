@@ -1,4 +1,4 @@
-# 台鐵到底行不行?--透過資料分析改善台鐵的高誤點率
+# 台鐵到底行不行?--應用資料科學理論與方法改善台鐵誤點
 
 ## 背景介紹
 1.動機
@@ -53,6 +53,6 @@ SQL主要是將爬蟲所爬取的資料放進SQL,並製成API讓組員方便使�
 
 
 ## 參考文獻
-
-
-https://ithelp.ithome.com.tw/articles/10203758
+https://www.iot.gov.tw/dl-6175-f153e123d9ea4faa8e33c5687813cb99.html
+https://www.railway.gov.tw/tra-tip-web/tip
+https://hdl.handle.net/11296/sznfue
